@@ -19,7 +19,7 @@ public:
 
 private:
     void Resize();
-    int top, size;
+    int size, top;
     int *narray;
 };
 #endif

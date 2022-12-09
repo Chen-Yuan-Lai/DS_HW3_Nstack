@@ -14,7 +14,6 @@ Nstack::~Nstack()
 
 void Nstack::Resize()
 {
-
     int *temp = new int[size * 2];
     copy(narray, narray + size, temp);
     size *= 2;
@@ -29,7 +28,7 @@ bool Nstack::isEmpty()
 
 void Nstack::Push(int d)
 {
-    if (top = size - 1)
+    if (top == size - 1)
     {
         Resize();
     }
@@ -45,9 +44,56 @@ int Nstack::Pop()
 
 void Nstack::Output(Nstack &s)
 {
-    for (int i = 0; i <= top; i++)
+    // pop elements from *this and push into s
+    while (isEmpty())
     {
-        cout << narray[i] << "  ";
+        s.Push(Pop());
     }
-    cout << endl;
+    // pop elements from *this and push into s
+    for (int i = s.Pop(); i != 1; i = s.Pop())
+    {
+        cout << i << " ";
+        Push(i);
+    }
+}
+
+bool Nstack::Remove(Nstack &s, int num)
+{
+    bool output = false;
+    while (isEmpty())
+    {
+        int temp = Pop();
+        if (temp == num)
+        {
+            output = true;
+            break;
+        }
+        s.Push(Pop());
+    }
+    for (int i = s.Pop(); i != 1; i = s.Pop())
+    {
+        Push(i);
+    }
+    return output;
+}
+
+void Nstack::Sort(Nstack &s)
+{ // using selection sort
+    while (isEmpty())
+    {
+        for (int i = 0; i < top; i++)
+        {
+            if (narray[top] > narray[i])
+            {
+                int temp = narray[top];
+                narray[top] = narray[i];
+                narray[i] = temp;
+            }
+        }
+        s.Push(Pop());
+    }
+    for (int i = s.Pop(); i != 1; i = s.Pop())
+    {
+        Push(i);
+    }
 }
